@@ -19,17 +19,12 @@ app.set('views', './views');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-var users = [
-    {id: 1, name: 'Kiệt'},
-    {id: 2, name: 'Như'},
-]
-
 app.get('/', (req, res) => res.render('index', {
     name: 'Kiệt',
 })); // Trả về html
 
 app.get('/users', (req, res) => res.render('users/index', {
-    users: users
+    users: db.get('users').value()
 }));
 
 app.get('/users/search', (req, res) => {
@@ -47,7 +42,7 @@ app.get('/users/create', (req, res) => {
 }); // Hiển thi (render) ra form create
 
 app.post('/users/create', (req, res) => {
-    user.push(req.body); // Lưu trữ thông tin người dùng
+    db.get('users').push(req.body).write(); // Lưu trữ thông tin người dùng
     res.redirect('/users'); // Chuyển sang lại trang users
 })
 
