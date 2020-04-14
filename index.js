@@ -1,8 +1,11 @@
 const express = require('express'); // Tạo ra một instance lưu trữ vào biến express
 const bodyParser = require('body-parser'); // Sử dụng req.body
-const cookieParser = require('cookie-parser') // Đọc req.cookies ở phía server
+const cookieParser = require('cookie-parser'); // Đọc req.cookies ở phía server
 
 const userRoute = require('./routes/user.route'); //Import từ user.route.js
+const authRoute = require('./routes/auth.route');
+
+const authMiddleware = require('./middlewares/auth.middleware');
 
 const port = 3000; 
 
@@ -25,6 +28,7 @@ app.get('/styles/custom.css', (req, res) => {
 
 })
 
-app.use('/users', userRoute); // có thể check callback từ file user.route.js
+app.use('/users', authMiddleware.requireAuth, userRoute); // có thể check callback từ file user.route.js, đặt middleware kiểm tra đăng nhập người dùng trước userRoute
+app.use('/auth', authRoute);
 
 app.listen(port, () => console.log('Server listening on port' + port)); 
