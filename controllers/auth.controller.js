@@ -1,11 +1,12 @@
+const md5 = require('md5');
+
 const db = require('../db');
-const shortid = require('shortid'); // tạo short-id
 
 module.exports.login = (req, res) => res.render('auth/login');
 
 module.exports.postLogin = (req, res) => {
     var email = req.body.email;
-    var password = req.body.password;
+    var password = md5(req.body.password); //Mã hóa password
 
     var user = db.get('users').find({ email: email }).value(); // Trả về object chứa cả thông tin người dùng đó
     if(!user) {
