@@ -29,6 +29,9 @@ module.exports.postLogin = (req, res) => {
         return;
     }
 
-    res.cookie('userId', user.id); // Tạo cookie trước khi redirect
+    res.cookie('userId', user.id, {
+        signed: true  
+    }); // Tạo cookie trước khi redirect
+
     res.redirect('/users');
 }
