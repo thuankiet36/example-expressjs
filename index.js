@@ -1,5 +1,6 @@
 const express = require('express'); // Tạo ra một instance lưu trữ vào biến express
 const bodyParser = require('body-parser'); // Sử dụng req.body
+const cookieParser = require('cookie-parser') // Đọc req.cookies ở phía server
 
 const userRoute = require('./routes/user.route'); //Import từ user.route.js
 
@@ -11,11 +12,13 @@ app.set('views', './views');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 
 app.use(express.static('public')); // sử dụng Static files
 
 app.get('/', (req, res) => res.render('index', {
-    name: 'Kiệt',
+    name: 'Coders Tokyo',
 })); // Trả về html
 
 app.get('/styles/custom.css', (req, res) => {
