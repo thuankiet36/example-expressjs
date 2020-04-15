@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser'); // Đọc req.cookies ở phía s
 
 const userRoute = require('./routes/user.route'); //Import từ user.route.js
 const authRoute = require('./routes/auth.route');
+const productRoute = require('./routes/product.route');
 
 const authMiddleware = require('./middlewares/auth.middleware');
 
@@ -25,11 +26,8 @@ app.get('/', (req, res) => res.render('index', {
     name: 'Coders Tokyo',
 })); // Trả về html
 
-app.get('/styles/custom.css', (req, res) => {
-
-})
-
 app.use('/users', authMiddleware.requireAuth, userRoute); // có thể check callback từ file user.route.js, đặt middleware kiểm tra đăng nhập người dùng trước userRoute
 app.use('/auth', authRoute);
+app.use('/products', productRoute);
 
 app.listen(port, () => console.log('Server listening on port' + port)); 
